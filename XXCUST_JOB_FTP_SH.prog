@@ -1,0 +1,37 @@
+#Shell script
+#====================================================================
+# @(#) XXCUST_JOB_FTP_SH.prog
+# ===================================================================
+# PURPOSE: This program will FTP file from oracle EBS server to other
+# windows/Unix based server
+# ===================================================================
+# -------------------------------------------------------------------
+# PARAMETERS
+# $0 = Shell Script Name
+# $1 = username/password
+# $2 = userid
+# $3 = username
+# $4 = request_id
+# ===================================================================
+
+#!/bin/bash
+# Set variables
+host="sftp.dekalbcountyga.gov"
+username="fmis"
+password="Dkc$fmis!17"
+file_to_transfer="$APPLCSF/$APPLOUT/o"
+remote_destination="/pbcs/test/out"
+FILE_NAME2=$5
+FILE_NAME3='.txt'
+file_to_transfer=$file_to_transfer$FILE_NAME2$FILE_NAME3
+# Transfer the file using sftp
+echo "Connecting to $host..."
+sftp $username@$host <<EOF
+    cd $remote_destination
+    put $file_to_transfer
+    quit
+EOF
+
+echo "File transfer completed."
+
+
